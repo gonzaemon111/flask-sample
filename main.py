@@ -1,25 +1,29 @@
-import os
-from flask import Flask,render_template, url_for
-import pprint
+from flask import Flask, session, redirect, url_for, request, render_template, send_from_directory
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+app = Flask(__name__)
 
-@app.route('/hello/<name>')
-def hello(name):
-  pprint.pprint(type(name) is str)
-  return name
-
-@app.route("/")
+@app.route('/login')
 def index():
-    return url_for("show_user_profile", username="ai_academy")
+    return "success"
 
-@app.route("/user/<username>")
-def show_user_profile(username):
-    return render_template('index.html', message="花子さん", username=username)
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    title = []
+    # POSTかどうか判定
+    if request.method == 'POST':
+        if request.form['username'] and request.form['password']:
+            # 例えば、ここでデータベース（MySQLなど）と接続するとします。
 
-@app.route("/post/<int:post_id>")
-def show_post(post_id):
-    return "Post" + str(post_id)
+            # SQLでユーザーの情報があるかを取得します。
+
+            # 例えば、セッションに情報を保持します
+            return redirect(url_for('index'))
+        else:
+            title.append("入力内容が間違っているか、入力されていない値があります。")
+            return render_template('login.html', message=title[0])
+    #正しくなければもう一度loginページを表示します
+
+    return render_template('login.html')
 
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
