@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-      <title>初めてのFlaskアプリケーション</title>
+    <title>Flask Sample</title>
   </head>
   <body>
-    <h1>こんにちは{{ message }}</h1>
-    <h1>こんにちは{{ username }}</h1>
-    <p>Flask</p>
+    <p>{{ message }}</p>
+    <hr>
+    <ul>
+    {% for i in li %}
+      <li>{{ i }}</li>
+    {% endfor %}
+    </ul>
+    <hr>
+    <p>{{ "name: %s lang: %s" % (dic["name"], dic["lang"]) }}</p>
   </body>
 </html>
